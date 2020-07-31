@@ -9,6 +9,11 @@ protected:
   std::bitset<N> b_;
   void insert(const Key &k) {}
   bool query(const Key &k) const { return true; }
+
+public:
+  // Returns the number of bits set.
+  size_t count() const { return b_.count(); }
+  void reset() noexcept { b_.reset(); }
 };
 
 // Classic Bloom Filter Implementation that can take arbitrary hash functions.

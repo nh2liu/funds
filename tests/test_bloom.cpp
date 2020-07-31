@@ -7,7 +7,7 @@ auto hash1 = [](uint32_t v) { return v; };
 
 auto hash2 = [](uint32_t v) { return v * 2; };
 
-TEST(BloomTest, CommonMethodCalLSequence) {
+TEST(BloomTest, CommonMethodCallSequence) {
   auto b = make_bloom<10, uint32_t>(hash1, hash2);
   EXPECT_FALSE(b.query(4));
   EXPECT_FALSE(b.query(3));
@@ -20,6 +20,17 @@ TEST(BloomTest, CommonMethodCalLSequence) {
   // Both hash bits should be true under size 10.
   EXPECT_TRUE(b.query(33));
   EXPECT_FALSE(b.query(37));
+}
+
+TEST(BloomTest, Reset) {
+  auto b = make_bloom<10, uint32_t>(hash1, hash2);
+  EXPECT_FALSE(b.query(4));
+  b.insert(4);
+  EXPECT_TRUE(b.query(4));
+  b.reset();
+  EXPECT_FALSE(b.query(4));
+  b.insert(4);
+  EXPECT_TRUE(b.query(4));
 }
 
 int main(int argc, char **argv) {
