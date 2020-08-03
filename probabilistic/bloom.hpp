@@ -25,6 +25,7 @@ class bloom<N, Key, Hash, Hashes...> : public bloom<N, Key, Hashes...> {
   inline size_t index(const Key &k) const { return h_(k) % N; }
 
 public:
+  bloom() : bloom<N, Key, Hashes...>(){};
   bloom(Hash h, Hashes... hashes)
       : bloom<N, Key, Hashes...>(hashes...), h_(h) {}
 
